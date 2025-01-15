@@ -25,8 +25,12 @@ public class BookResource {
 
     @GET
     @Path("/{id}")
-    public Book getById(@PathParam("id") Long id) {
-        return service.findById(id);
+    public Response getById(@PathParam("id") Long id) {
+        Book book = service.findById(id);
+        if (book == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok(book).build(); 
     }
 
     @POST

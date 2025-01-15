@@ -16,7 +16,7 @@ public class BookResourceTest {
 
     @Test
     void shouldGetAllBooks() {
-        // Sono presenti due libri (shouldCreateBook, shouldUpdateBook)
+        // Sono presenti due libri (shouldCreateBook e shouldUpdateBook creano dei libri)
         given()
                 .header(HttpHeaders.ACCEPT, "application/json")
                 .when().get("/books")
@@ -107,6 +107,6 @@ public class BookResourceTest {
         given()
                 .when().get("/books/" + bookId)
                 .then()
-                .statusCode(204); 
+                .statusCode(404); 
     }
 }

@@ -22,3 +22,17 @@ Content-Type: application/json
 }
 ###
 DELETE http://localhost:8080/books/1
+###
+GET http://localhost:8080/books/999
+
+###
+DELETE http://localhost:8080/books/999
+###
+PUT http://localhost:8080/books/999
+Content-Type: application/json
+
+{
+  "title": "Clean Code - Updated",
+  "author": "Robert C. Martin",
+  "year": 2008
+}
