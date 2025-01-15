@@ -147,5 +147,19 @@
                 <quarkus.native.enabled>true</quarkus.native.enabled>
             </properties>
         </profile>
+
+        <profile>
+            <id>h2</id>
+            <properties>
+                <quarkus.profile>h2</quarkus.profile>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>mysql</id>
+            <properties>
+                <quarkus.profile>mysql</quarkus.profile>
+            </properties>
+        </profile>
     </profiles>
 </project>
