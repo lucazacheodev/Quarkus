@@ -20,7 +20,6 @@ public class ArticleController implements ArticlesApi {
     }
 
     @Override
-    @RolesAllowed("admin")
     public Uni<Response> createArticle(@Valid @NotNull ArticleDTO articleDTO) {
         return service.createArticle(articleDTO)
             .onItem().transform(persistedArticle -> Response
