@@ -1,0 +1,128 @@
+openapi: 3.0.3
+info:
+  title: smartbar-backoffice
+  description: API for managing categories, articles, and tables.
+  version: 1.0.0
+
+paths:
+  /articles:
+    post:
+      summary: Create a new article
+      operationId: createArticle
+      requestBody:
+        description: Article object without ID
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArticleDTO'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArticleDTO'
+        '400':
+          description: Bad Request
+
+    get:
+      summary: Get all articles
+      operationId: getAllArticles
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ArticleDTO'
+
+  /articles/{id}:
+    get:
+      summary: Get an article by ID
+      operationId: getArticleById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArticleDTO'
+        '404':
+          description: Not Found
+
+    put:
+      summary: Update an article by ID
+      operationId: updateArticleById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Article object without ID
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArticleDTO'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArticleDTO'
+        '404':
+          description: Not Found
+
+    delete:
+      summary: Delete an article by ID
+      operationId: deleteArticleById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+
+components:
+  schemas:
+    ArticleDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        name:
+          type: string
+        price:
+          type: number
+          format: float
+        description:
+          type: string
+        picture:
+          type: string
+      required:
+        - name
+        - price
+        - description
+        - picture

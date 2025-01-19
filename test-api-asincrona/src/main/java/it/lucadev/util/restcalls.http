@@ -1,0 +1,27 @@
+POST http://localhost:8080/articles HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "New Article",
+  "price": 19.99,
+  "description": "This is a description of the new article.",
+  "picture": "https://example.com/picture.jpg"
+}
+###
+GET http://localhost:8080/articles
+###
+GET http://localhost:8080/articles/1 HTTP/1.1
+###
+PUT http://localhost:8080/articles/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Updated Article Name",
+  "price": 19.99,
+  "description": "This is a description of the new article.",
+  "picture": "https://example.com/picture.jpg"
+}
+
+###
+DELETE http://localhost:8080/articles/1 HTTP/1.1
+
