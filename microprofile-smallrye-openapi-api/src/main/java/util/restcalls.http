@@ -1,0 +1,19 @@
+GET http://localhost:8080/fruits HTTP/1.1
+
+###
+POST http://localhost:8080/fruits HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Watermelon",
+    "description": "Summer Fruit"
+}
+
+###
+DELETE http://localhost:8080/fruits HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Watermelon",
+    "description": "Summer Fruit"   
+}
