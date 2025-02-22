@@ -1,71 +1,91 @@
-# quarkus-profile-demo
+# Guida alla Configurazione di Profili Multipli per Test in Quarkus
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+## Passo 1: Configurazione del file pom.xml
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+```xml
+<!-- Nella sezione configuration del plugin maven-failsafe-plugin -->
+<skipITs>false</skipITs>
 
-## Running the application in dev mode
+<!-- profili per i diversi database -->
+<profiles>
+    <!-- Profilo H2 per Unit Test -->
+    <profile>
+        <id>h2</id>
+        <activation>
+            <activeByDefault>true</activeByDefault>
+        </activation>
+        <properties>
+            <quarkus.profile>h2</quarkus.profile>
+        </properties>
+    </profile>
 
-You can run your application in dev mode that enables live coding using:
-
-```shell script
-./mvnw quarkus:dev
+    <!-- Profilo Oracle per Integration Test -->
+    <profile>
+        <id>oracle</id>
+        <properties>
+            <quarkus.profile>oracle</quarkus.profile>
+        </properties>
+    </profile>
+</profiles>
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+## Passo 2: Configurazione del file application.properties
 
-## Packaging and running the application
+```properties
+# Configurazione H2 per unit test
+%h2.quarkus.datasource.db-kind=h2
+%h2.quarkus.datasource.jdbc.url=jdbc:h2:mem:testdb
+%h2.quarkus.datasource.username=sa
+%h2.quarkus.datasource.password=sa
+%h2.quarkus.hibernate-orm.database.generation=update
 
-The application can be packaged using:
-
-```shell script
-./mvnw package
+# Configurazione Oracle per integration test
+%oracle.quarkus.datasource.db-kind=oracle
+%oracle.quarkus.datasource.jdbc.url=jdbc:oracle:thin:@//localhost:1521/testdb
+%oracle.quarkus.datasource.username=sa
+%oracle.quarkus.datasource.password=sa
+%oracle.quarkus.hibernate-orm.dialect=org.hibernate.dialect.OracleDialect
 ```
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+## Passo 3: Configurazione delle classi "TestProfile"
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
-
-If you want to build an _über-jar_, execute the following command:
-
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
+```java
+public class H2TestProfile implements QuarkusTestProfile {
+    @Override
+    public String getConfigProfile() {
+        return "h2";
+    }
+}
 ```
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
-
-## Creating a native executable
-
-You can create a native executable using:
-
-```shell script
-./mvnw package -Dnative
+```java
+public class OracleTestProfile implements QuarkusTestProfile {
+    @Override
+    public String getConfigProfile() {
+        return "oracle";
+    }
+}
 ```
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+## Passo 4: Configurazione delle classi di test
 
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
+```java
+@QuarkusTest
+@TestProfile(OracleTestProfile.class)
+class MyControllerIT {
+    //Integration Tests
+}
 ```
 
-You can then execute your native executable with: `./target/quarkus-profile-demo-1.0.0-SNAPSHOT-runner`
+```java
 
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
+@QuarkusTest
+@TestProfile(H2TestProfile.class)
+class MyControllerTest {
+    //Unit Tests
+}
+```
 
-## Related Guides
+## Conclusione
 
-- JDBC Driver - H2 ([guide](https://quarkus.io/guides/datasource)): Connect to the H2 database via JDBC
-- Hibernate ORM with Panache ([guide](https://quarkus.io/guides/hibernate-orm-panache)): Simplify your persistence code for Hibernate ORM via the active record or the repository pattern
-- JDBC Driver - Oracle ([guide](https://quarkus.io/guides/datasource)): Connect to the Oracle database via JDBC
-
-## Provided Code
-
-### Hibernate ORM
-
-Create your first JPA entity
-
-[Related guide section...](https://quarkus.io/guides/hibernate-orm)
-
-[Related Hibernate with Panache section...](https://quarkus.io/guides/hibernate-orm-panache)
-
+Ora lanciando il comando ```mvn verify``` eseguiremo prima i test unitari con il plugin ```maven-surefire-plugin``` con il profilo ```H2``` sul database omonimo e, successivamente, i test di integrazione con il plugin ```maven-failsafe-plugin``` con il profilo ```Oracle``` sul database omonimo.

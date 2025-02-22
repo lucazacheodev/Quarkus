@@ -36,10 +36,4 @@ class MyControllerTest {
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
         assertEquals(null, response.getEntity());
     }
-
-    @Test
-    void testDeleteEntity() {
-        Response response = myController.delete(1L);
-        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-    }
 }

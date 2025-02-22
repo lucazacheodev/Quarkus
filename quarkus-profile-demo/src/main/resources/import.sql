@@ -1,4 +1,4 @@
--- Crea la tabella se non esiste (compatibile con H2)
+-- Crea la tabella se non esiste
 CREATE TABLE IF NOT EXISTS myentity (
     id BIGINT PRIMARY KEY,
     field VARCHAR(255)
