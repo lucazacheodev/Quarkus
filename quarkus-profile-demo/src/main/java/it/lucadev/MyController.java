@@ -20,7 +20,6 @@ public class MyController {
     }
 
     @POST
-    @Path("")
     @Transactional
     public Response post(MyEntity entity) {
         repository.persist(entity);
@@ -34,7 +33,6 @@ public class MyController {
     }
 
     @GET
-    @Path("")
     public Response getAll() {
         return Response.ok(repository.listAll()).build();
     }
