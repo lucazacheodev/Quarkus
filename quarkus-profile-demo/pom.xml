@@ -110,9 +110,6 @@
                 <version>${surefire-plugin.version}</version>
                 <configuration>
                     <systemPropertyVariables>
-
-                        <quarkus.profile>h2</quarkus.profile>
-
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                         <maven.home>${maven.home}</maven.home>
                     </systemPropertyVariables>
@@ -130,12 +127,12 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <skipITs>false</skipITs>
                     <systemPropertyVariables>
                         <native.image.path>
                             ${project.build.directory}/${project.build.finalName}-runner</native.image.path>
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                         <maven.home>${maven.home}</maven.home>
-                        <quarkus.profile>oracle</quarkus.profile>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
@@ -172,12 +169,6 @@
             <properties>
                 <quarkus.profile>oracle</quarkus.profile>
             </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>io.quarkus</groupId>
-                    <artifactId>quarkus-jdbc-oracle</artifactId>
-                </dependency>
-            </dependencies>
         </profile>
     </profiles>
 </project>
