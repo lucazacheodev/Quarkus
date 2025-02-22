@@ -1,0 +1,1 @@
+docker run -d --name oracle-test -p 1521:1521 -e ORACLE_PASSWORD=MySecretPassword123 -e APP_USER=sa -e APP_USER_PASSWORD=sa -e ORACLE_DATABASE=testdb gvenzl/oracle-xe:21-slim
