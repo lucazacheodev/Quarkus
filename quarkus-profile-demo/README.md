@@ -70,19 +70,19 @@ public class OracleTestProfile implements QuarkusTestProfile {
 ## Passo 4: Configurazione delle classi di test
 
 ```java
-@QuarkusTest
-@TestProfile(OracleTestProfile.class)
-class MyControllerIT {
-    //Integration Tests
-}
-```
-
-```java
 
 @QuarkusTest
 @TestProfile(H2TestProfile.class)
 class MyControllerTest {
     //Unit Tests
+}
+```
+
+```java
+@QuarkusTest
+@TestProfile(OracleTestProfile.class)
+class MyControllerIT {
+    //Integration Tests
 }
 ```
 
