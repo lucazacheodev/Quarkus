@@ -4,11 +4,9 @@ import static io.restassured.RestAssured.given;
 
 import org.junit.jupiter.api.Test;
 
-import io.quarkus.test.junit.QuarkusTest;
-import io.quarkus.test.junit.TestProfile;
+import io.quarkus.test.junit.QuarkusIntegrationTest;
 
-@QuarkusTest
-@TestProfile(OracleTestProfile.class)
+@QuarkusIntegrationTest
 class MyControllerIT {
 
     @Test

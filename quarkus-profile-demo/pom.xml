@@ -32,17 +32,21 @@
     </dependencyManagement>
 
     <dependencies>
+
+        <!-- DB dependencies    -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-jdbc-h2</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-hibernate-orm-panache</artifactId>
+            <artifactId>quarkus-jdbc-oracle</artifactId>
         </dependency>
+        <!--                    -->
+
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-jdbc-oracle</artifactId>
+            <artifactId>quarkus-hibernate-orm-panache</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -56,6 +60,8 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-openapi</artifactId>
         </dependency>
+
+        <!-- test dependencies  -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit5</artifactId>
@@ -76,6 +82,8 @@
             <artifactId>mockito-junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--                    -->
+        
     </dependencies>
 
     <build>
@@ -148,25 +156,6 @@
             <properties>
                 <skipITs>false</skipITs>
                 <quarkus.native.enabled>true</quarkus.native.enabled>
-            </properties>
-        </profile>
-        
-        <!-- Profilo predefinito per H2 (test unitari) -->
-        <profile>
-            <id>h2</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <quarkus.profile>h2</quarkus.profile>
-            </properties>
-        </profile>
-
-        <!-- Profilo per Oracle (integration test) -->
-        <profile>
-            <id>oracle</id>
-            <properties>
-                <quarkus.profile>oracle</quarkus.profile>
             </properties>
         </profile>
     </profiles>

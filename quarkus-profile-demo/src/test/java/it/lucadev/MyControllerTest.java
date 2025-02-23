@@ -9,12 +9,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import io.quarkus.test.junit.QuarkusTest;
-import io.quarkus.test.junit.TestProfile;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 
 @QuarkusTest
-@TestProfile(H2TestProfile.class)
 class MyControllerTest {
 
     @Mock
